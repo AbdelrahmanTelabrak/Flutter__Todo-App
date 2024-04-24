@@ -7,56 +7,35 @@ import 'package:flutter_todo/view/add_task.dart';
 import 'package:flutter_todo/view/task_list.dart';
 import 'package:intl/intl.dart';
 
-class TasksActivity extends StatefulWidget {
+import '../common/constants.dart';
+
+class TasksActivity extends StatelessWidget {
   const TasksActivity({super.key});
 
-  @override
-  State<TasksActivity> createState() => _TasksActivityState();
-}
-
-class _TasksActivityState extends State<TasksActivity> {
-  List<TaskModel> firstFiveTasks = [
-    TaskModel(
-      id: '1',
-      title: 'Complete project proposal',
-      category: 'assets/icons/ic_cat_task.svg',
-      date: 'April 16, 2024',
-      time: '10:00 AM',
-    ),
-    TaskModel(
-      id: '2',
-      title: 'Buy groceries',
-      category: 'assets/icons/ic_cat_event.svg',
-      date: '2024-04-17',
-      time: '4:00 PM',
-    ),
-  ];
-
-  List<TaskModel> lastFiveTasks = [
-    TaskModel(
-      id: '6',
-      title: 'Pay bills',
-      category: 'assets/icons/ic_cat_goal.svg',
-      date: '2024-04-21',
-      time: '9:00 AM',
-      isDone: true,
-    ),
-  ];
-
-  String todayDate() {
-    DateTime now = DateTime.now();
-    DateFormat formatter = DateFormat('MMMM dd, yyyy');
-    String formatted = formatter.format(now);
-    return formatted;
-  }
-
-  void updateTasks() {
-    setState(() {});
-  }
-
-  void addTask(BuildContext context) {
-    setState(() {Navigator.pop(context);});
-  }
+  // List<TaskModel> firstFiveTasks = [
+  //   TaskModel(
+  //     title: 'Complete project proposal',
+  //     category: 'assets/icons/ic_cat_task.svg',
+  //     date: 'April 16, 2024',
+  //     time: '10:00 AM',
+  //   ),
+  //   TaskModel(
+  //     title: 'Buy groceries',
+  //     category: 'assets/icons/ic_cat_event.svg',
+  //     date: '2024-04-17',
+  //     time: '4:00 PM',
+  //   ),
+  // ];
+  //
+  // List<TaskModel> lastFiveTasks = [
+  //   TaskModel(
+  //     title: 'Pay bills',
+  //     category: 'assets/icons/ic_cat_goal.svg',
+  //     date: '2024-04-21',
+  //     time: '9:00 AM',
+  //     isDone: true,
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +49,7 @@ class _TasksActivityState extends State<TasksActivity> {
               isScrollControlled: true,
               backgroundColor: const Color(0xffF1F5F9),
               builder: (context) {
-                return AddTaskBottomSheet(updateTasks: addTask);
+                return const AddTaskBottomSheet();
               }),
         ),
       ),
@@ -107,18 +86,14 @@ class _TasksActivityState extends State<TasksActivity> {
                       align: TextAlign.center),
                   // Due Tasks
                   const SizedBox(height: 32),
-                  TasksListView(
-                      tasks: TasksList.instance.dueTasks,
-                      updateTasks: updateTasks),
+                  const TasksListView(done: false),
                   // TasksListView(tasks: firstFiveTasks, updateTasks: updateTasks),
                   // Done Tasks
                   const SizedBox(height: 24),
                   semiBoldText('Completed',
                       color: Colors.black, align: TextAlign.start),
                   const SizedBox(height: 24),
-                  TasksListView(
-                      tasks: TasksList.instance.doneTasks,
-                      updateTasks: updateTasks),
+                  const TasksListView(done: true),
                   // TasksListView(tasks: lastFiveTasks, updateTasks: updateTasks),
                   const SizedBox(height: 90),
                 ],

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/common/constants.dart';
+import 'package:flutter_todo/common/tasks_provider.dart';
 import 'package:flutter_todo/common/widgets/buttons.dart';
 import 'package:flutter_todo/common/widgets/textfields.dart';
 import 'package:flutter_todo/common/widgets/texts.dart';
 import 'package:flutter_todo/view/cat_selector.dart';
 import 'package:flutter_todo/viewmodel/add_task_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
-  final Function updateTasks;
-
-  const AddTaskBottomSheet({super.key, required this.updateTasks});
+  const AddTaskBottomSheet({super.key});
 
   @override
   State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
@@ -16,6 +17,7 @@ class AddTaskBottomSheet extends StatefulWidget {
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final AddTaskViewModel _viewModel = AddTaskViewModel();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -61,7 +63,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 onPressed: () {
                   /// Create the new Task
                   if (_viewModel.addTask()) {
-                    widget.updateTasks(context);
+                    Provider.of<TasksProvider>(context, listen: false).addTask(
+                      title: _viewModel.title!,
+                      category:
+                          _viewModel.category ?? 'assets/icons/ic_cat_task.svg',
+                      date: _viewModel.date??todayDate(),
+                      time: _viewModel.time,
+                    );
+                    Navigator.pop(context);
                   }
                 },
               ),

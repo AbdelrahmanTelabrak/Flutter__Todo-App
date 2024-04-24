@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_todo/common/constants.dart';
 import 'package:flutter_todo/common/widgets/texts.dart';
 import 'package:flutter_todo/model/task_model.dart';
-import 'package:intl/intl.dart';
 
-class TaskItem extends StatefulWidget {
+class TaskItem extends StatelessWidget {
   final TaskModel task;
-  final Function updateTasks;
+  final Function changeTaskState;
+  const TaskItem({super.key, required this.task, required this.changeTaskState});
 
-  const TaskItem({super.key, required this.task, required this.updateTasks});
-
-  @override
-  State<TaskItem> createState() => _TaskItemState();
-}
-
-class _TaskItemState extends State<TaskItem> {
   bool isLate() {
-    DateTime now = DateTime.now();
-    DateFormat formatter = DateFormat('MMMM dd, yyyy');
-    // DateFormat formatter = DateFormat('yyyy-mm-dd');
-    String formatted = formatter.format(now);
-    if (widget.task.date == null) {
-      return false;
-    }
-    if (formatted == widget.task.date) {
+    String today = todayDate();
+    if (today == task.date) {
       return false;
     } else {
       return true;
@@ -32,12 +20,12 @@ class _TaskItemState extends State<TaskItem> {
 
   String subtitle() {
     String sub = '';
-    if (widget.task.time != null) {
-      sub += widget.task.time!;
+    if (task.time != null) {
+      sub += task.time!;
       sub += '    ';
     }
-    if (widget.task.date != null) {
-      sub += widget.task.date!;
+    if (task.date != null) {
+      sub += task.date!;
     }
     return sub;
   }
@@ -45,10 +33,10 @@ class _TaskItemState extends State<TaskItem> {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: widget.task.isDone ? 0.5 : 1.0,
+      opacity: task.isDone ? 0.5 : 1.0,
       child: ListTile(
-        leading: SvgPicture.asset(widget.task.category!),
-        title: semiBoldText(widget.task.title!,
+        leading: SvgPicture.asset(task.category!),
+        title: semiBoldText(task.title!,
             color: isLate() ? Colors.red.shade800 : Colors.black),
         subtitle: subtitle().isNotEmpty
             ? mediumText(subtitle(),
@@ -56,12 +44,9 @@ class _TaskItemState extends State<TaskItem> {
                 color: isLate() ? Colors.red.shade800 : Colors.black)
             : null,
         trailing: Checkbox(
-          value: widget.task.isDone,
+          value: task.isDone,
           onChanged: (newVal) {
-            setState(() {
-              widget.task.changeStatus();
-              widget.updateTasks();
-            });
+            changeTaskState(task);
           },
           fillColor: MaterialStateColor.resolveWith((states) {
             return states.contains(MaterialState.selected)

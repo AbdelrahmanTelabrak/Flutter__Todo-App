@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_todo/common/tasks_lists.dart';
 
 class TaskModel {
-  String id;
+  String? id;
   String? title;
   String? category;
   String? date;
@@ -9,12 +10,12 @@ class TaskModel {
   bool isDone;
 
   TaskModel(
-      {required this.id,
-      required String this.title,
+      {required String this.title,
       required String this.category,
       required String this.date,
       this.time,
       this.isDone = false}) {
+    id = UniqueKey().hashCode.toString();
     if (isDone) {
       TasksList.instance.doneTasks.add(this);
     } else {

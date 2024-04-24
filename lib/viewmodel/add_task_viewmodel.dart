@@ -3,6 +3,8 @@ import 'package:flutter_todo/common/tasks_lists.dart';
 import 'package:flutter_todo/model/task_model.dart';
 import 'package:intl/intl.dart';
 
+import '../common/constants.dart';
+
 class AddTaskViewModel {
   final formKey = GlobalKey<FormState>();
   String? title;
@@ -26,22 +28,14 @@ class AddTaskViewModel {
     this.time = time;
   }
 
-  String todayDate() {
-    DateTime now = DateTime.now();
-    DateFormat formatter = DateFormat('MMMM dd, yyyy');
-    String formatted = formatter.format(now);
-    return formatted;
-  }
-
   bool addTask() {
     if (formKey.currentState!.validate()) {
-      TaskModel(
-        id: UniqueKey().hashCode.toString(),
-        title: title!,
-        category: category??'assets/icons/ic_cat_task.svg',
-        date: date??todayDate(),
-        time: time
-      );
+      // TaskModel(
+      //   title: title!,
+      //   category: category??'assets/icons/ic_cat_task.svg',
+      //   date: date??todayDate(),
+      //   time: time
+      // );
       return true;
     }
     return false;

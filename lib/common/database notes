@@ -1,0 +1,13 @@
+1.Insert:
+    "INSERT INTO notes (content, date, time) VALUES('task1', '10-2-2021', '9:23 pm')"
+
+2. Read:
+    "SELECT * FROM notes"  ====> select ALL data from table 'notes'
+    "SELECT content, date FROM notes"
+    "SELECT FROM notes WHERE id = '33'"
+
+3. Update:
+    "UPDATE notes SET content = 'task101', date = '24-5-2019' WHERE id = '24'"
+
+4. Delete:
+    "DELETE FROM notes WHERE id = '24'"
