@@ -19,9 +19,14 @@ class SqlDB{
 
   Future _onCreate(Database db, int version) async{
     await db.execute("""
-      CREATE TABLE "tasks"
-        "id" INTEGER PRIMARY KEY
-        
+      CREATE TABLE tasks(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            category TEXT DEFAULT 'assets/icons/ic_cat_task.svg',
+            date TEXT DEFAULT CURRENT_DATE,
+            time TEXT,
+            isDone INTEGER DEFAULT 0
+          )
     """);
   }
 
@@ -37,24 +42,24 @@ class SqlDB{
   }
 
   //************* Usage ***********
-  Future<List<Map>> readData(String sql) async{
+  Future<List<Map>> readData(String sql, [List<Object?>? arguments]) async{
     Database? myDb = await getDb();
-    return await myDb!.rawQuery(sql);
+    return await myDb!.rawQuery(sql, arguments);
   }
 
-  Future<int> insertData(String sql) async{
+  Future<int> insertData(String sql, [List<Object?>? arguments]) async{
     Database? myDb = await getDb();
-    return await myDb!.rawInsert(sql);
+    return await myDb!.rawInsert(sql, arguments);
   }
 
-  Future<int> updateData(String sql) async{
+  Future<int> updateData(String sql, [List<Object?>? arguments]) async{
     Database? myDb = await getDb();
-    return await myDb!.rawUpdate(sql);
+    return await myDb!.rawUpdate(sql, arguments);
   }
 
-  Future<int> deleteData(String sql) async{
+  Future<int> deleteData(String sql, [List<Object?>? arguments]) async{
     Database? myDb = await getDb();
-    return await myDb!.rawDelete(sql);
+    return await myDb!.rawDelete(sql, arguments);
   }
 
 }

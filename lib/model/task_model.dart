@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo/common/tasks_lists.dart';
 
 class TaskModel {
-  String? id;
+  int? id;
   String? title;
   String? category;
   String? date;
@@ -10,17 +10,28 @@ class TaskModel {
   bool isDone;
 
   TaskModel(
-      {required String this.title,
-      required String this.category,
-      required String this.date,
+      {this.id,
+      required this.title,
+      this.category,
+      this.date,
       this.time,
       this.isDone = false}) {
-    id = UniqueKey().hashCode.toString();
     if (isDone) {
       TasksList.instance.doneTasks.add(this);
     } else {
       TasksList.instance.dueTasks.add(this);
     }
+  }
+
+  factory TaskModel.fromJson(Map<String, dynamic> map) {
+    return TaskModel(
+      id: map['id'],
+      title: map['title'],
+      category: map['category'],
+      date: map['date'],
+      time: map['time'],
+      isDone: map['isDone'] == 1 ? true : false,
+    );
   }
 
   void changeStatus() {

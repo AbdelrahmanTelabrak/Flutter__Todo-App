@@ -60,19 +60,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               const SizedBox(height: 24),
               fullWidthButton(
                 child: boldText('Save', color: Colors.white),
-                onPressed: () {
-                  /// Create the new Task
-                  if (_viewModel.addTask()) {
-                    Provider.of<TasksProvider>(context, listen: false).addTask(
-                      title: _viewModel.title!,
-                      category:
-                          _viewModel.category ?? 'assets/icons/ic_cat_task.svg',
-                      date: _viewModel.date??todayDate(),
-                      time: _viewModel.time,
-                    );
-                    Navigator.pop(context);
-                  }
-                },
+                onPressed: () => _viewModel.addTask(context),
               ),
               const SizedBox(height: 24),
             ],

@@ -11,6 +11,7 @@ class TaskItem extends StatelessWidget {
 
   bool isLate() {
     String today = todayDate();
+    // print(task.date);
     if (today == task.date) {
       return false;
     } else {
@@ -32,10 +33,11 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(task.title!);
     return Opacity(
       opacity: task.isDone ? 0.5 : 1.0,
       child: ListTile(
-        leading: SvgPicture.asset(task.category!),
+        leading: SvgPicture.asset(task.category?? 'assets/icons/ic_cat_task.svg'),
         title: semiBoldText(task.title!,
             color: isLate() ? Colors.red.shade800 : Colors.black),
         subtitle: subtitle().isNotEmpty
@@ -54,6 +56,7 @@ class TaskItem extends StatelessWidget {
                 : Colors.transparent;
           }),
         ),
+
       ),
     );
   }

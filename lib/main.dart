@@ -17,11 +17,34 @@ class MyApp extends StatelessWidget {
       create: (context) => TasksProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: 'Inter'
-        ),
-        home: const TasksActivity(),
+        theme: ThemeData(fontFamily: 'Inter'),
+        home: const InitPage(),
       ),
     );
+  }
+}
+
+class InitPage extends StatefulWidget {
+  const InitPage({super.key});
+
+  @override
+  State<InitPage> createState() => _InitPageState();
+}
+
+class _InitPageState extends State<InitPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      Provider.of<TasksProvider>(context, listen: false).getAllTasks();
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const TasksActivity()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(color: Colors.white);
   }
 }

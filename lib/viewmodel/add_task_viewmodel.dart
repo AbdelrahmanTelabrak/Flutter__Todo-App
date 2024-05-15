@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo/common/tasks_lists.dart';
 import 'package:flutter_todo/model/task_model.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_todo/repository/tasks_repo.dart';
+import 'package:provider/provider.dart';
 
 import '../common/constants.dart';
+import '../common/tasks_provider.dart';
 
 class AddTaskViewModel {
+  final taskRepo = TasksRepository();
   final formKey = GlobalKey<FormState>();
   String? title;
   String? category;
@@ -28,17 +30,16 @@ class AddTaskViewModel {
     this.time = time;
   }
 
-  bool addTask() {
+  void addTask(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      // TaskModel(
-      //   title: title!,
-      //   category: category??'assets/icons/ic_cat_task.svg',
-      //   date: date??todayDate(),
-      //   time: time
-      // );
-      return true;
+      Provider.of<TasksProvider>(context, listen: false).addTask(
+        title: title!,
+        category: category ?? 'assets/icons/ic_cat_task.svg',
+        date: date ?? todayDate(),
+        time: time,
+      );
+      Navigator.pop(context);
     }
-    return false;
   }
 
   String? validateRequired(dynamic value) {
