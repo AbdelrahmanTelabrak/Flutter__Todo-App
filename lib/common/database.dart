@@ -25,6 +25,8 @@ class SqlDB{
             category TEXT DEFAULT 'assets/icons/ic_cat_task.svg',
             date TEXT DEFAULT CURRENT_DATE,
             time TEXT,
+            notes TEXT,
+            priority INTEGER,
             isDone INTEGER DEFAULT 0
           )
     """);
