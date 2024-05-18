@@ -3,6 +3,8 @@ import 'package:flutter_todo/common/tasks_provider.dart';
 import 'package:flutter_todo/view/tasks_activity.dart';
 import 'package:provider/provider.dart';
 
+import 'common/constants.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,7 +39,7 @@ class _InitPageState extends State<InitPage> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration.zero, () {
-      Provider.of<TasksProvider>(context, listen: false).getAllTasks();
+      Provider.of<TasksProvider>(context, listen: false).getTodayTask();
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => const TasksActivity()));
     });
