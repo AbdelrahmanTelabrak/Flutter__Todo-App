@@ -37,9 +37,6 @@ This To-Do List app is developed as part of a virtual internship with TeknoSoft.
 - `badges`: For adding notification badges.
 - `floating_menu_panel`: For an enhanced floating menu experience.
 
-## Screenshots
-![Screenshot](link-to-screenshot)
-
 ## Installation
 
 To run this project locally, follow these steps:
