@@ -7,6 +7,8 @@ class TaskModel {
   String? category;
   String? date;
   String? time;
+  String? notes;
+  int? priority;
   bool isDone;
 
   TaskModel(
@@ -15,6 +17,8 @@ class TaskModel {
       this.category,
       this.date,
       this.time,
+      this.notes,
+      this.priority,
       this.isDone = false}) {
     if (isDone) {
       TasksList.instance.doneTasks.add(this);
@@ -30,6 +34,8 @@ class TaskModel {
       category: map['category'],
       date: map['date'],
       time: map['time'],
+      priority: map['priority'],
+      notes: map['notes'],
       isDone: map['isDone'] == 1 ? true : false,
     );
   }

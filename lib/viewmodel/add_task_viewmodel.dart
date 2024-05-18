@@ -13,6 +13,8 @@ class AddTaskViewModel {
   String? category;
   String? date;
   String? time;
+  int? priority;
+  String? notes;
 
   void updateTitle(String title) {
     this.title = title;
@@ -23,11 +25,21 @@ class AddTaskViewModel {
   }
 
   void updateDate(String date) {
+    print("This date: $date");
     this.date = date;
   }
 
   void updateTime(String time) {
     this.time = time;
+  }
+
+  void updatePriority(String priority) {
+    print('priority = $priority');
+    this.priority = int.parse(priority);
+  }
+
+  void updateNote(String notes) {
+    this.notes = notes;
   }
 
   void addTask(BuildContext context) {
@@ -37,6 +49,8 @@ class AddTaskViewModel {
         category: category ?? 'assets/icons/ic_cat_task.svg',
         date: date ?? todayDate(),
         time: time,
+        priority: priority,
+        notes: notes,
       );
       Navigator.pop(context);
     }
