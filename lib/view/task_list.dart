@@ -48,7 +48,7 @@ class TasksListView extends StatelessWidget {
                 child: TaskItem(
                   task: (done ? value.doneTasks[index] : value.dueTasks[index]),
                   changeTaskState: (task) {
-                    value.updateTask(task);
+                    value.updateTask(task, true);
                   },
                 ),
               ),
