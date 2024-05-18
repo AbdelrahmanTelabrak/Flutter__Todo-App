@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/common/constants.dart';
+import 'package:flutter_todo/common/tasks_provider.dart';
 import 'package:flutter_todo/common/widgets/buttons.dart';
 import 'package:flutter_todo/common/widgets/textfields.dart';
 import 'package:flutter_todo/common/widgets/texts.dart';
 import 'package:flutter_todo/view/cat_selector.dart';
+import 'package:flutter_todo/view/priority_selector.dart';
 import 'package:flutter_todo/viewmodel/add_task_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
-  final Function updateTasks;
-
-  const AddTaskBottomSheet({super.key, required this.updateTasks});
+  const AddTaskBottomSheet({super.key});
 
   @override
   State<AddTaskBottomSheet> createState() => _AddTaskBottomSheetState();
@@ -16,6 +18,8 @@ class AddTaskBottomSheet extends StatefulWidget {
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final AddTaskViewModel _viewModel = AddTaskViewModel();
+  final TextEditingController _dateController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -56,14 +60,47 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 ],
               ),
               const SizedBox(height: 24),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  semiBoldText('Priority    ', fontSize: 14),
+                  const SizedBox(width: 24),
+                  SizedBox(
+                    height: 50,
+                    child: PrioritySelector(
+                      choosePriority: (priority) {
+                        setState(() {});
+                        _viewModel.updatePriority(priority);
+                        print(priority);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              // PrioritySelector(choosePriority: _viewModel.updatePriority),
+              semiBoldText('Date', fontSize: 14, align: TextAlign.start),
+              const SizedBox(height: 8),
+              datePickerFormField(
+                context: context,
+                controller: _dateController,
+                onUpdate: () {
+                  setState(() {});
+                },
+                onChanged: _viewModel.updateDate,
+              ),
+              const SizedBox(height: 24),
+              semiBoldText('Task Notes', fontSize: 14, align: TextAlign.start),
+              const SizedBox(height: 8),
+              basicFormField(
+                hint: 'Notes',
+                minLines: 3,
+                onChanged: _viewModel.updateNote,
+              ),
+              const SizedBox(height: 24),
               fullWidthButton(
                 child: boldText('Save', color: Colors.white),
-                onPressed: () {
-                  /// Create the new Task
-                  if (_viewModel.addTask()) {
-                    widget.updateTasks(context);
-                  }
-                },
+                onPressed: () => _viewModel.addTask(context),
               ),
               const SizedBox(height: 24),
             ],
